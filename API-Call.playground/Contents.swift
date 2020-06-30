@@ -23,13 +23,16 @@ struct Stores: Codable {
     var stores: [Store]
 }
 
-let store = Store(name: "My Wonderful Store", items: [Store.Item.init(name: "My Item", price: 15.99)])
-let exampleJson = Stores(stores: [store])
-
 let url = URL(string: "http:127.0.01:5000/store")!
 var request = URLRequest(url: url)
-request.httpMethod = "POST"
+request.httpMethod = "GET"
 
 let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-    
+    do {
+        let store = try JSONDecoder().decode(Stores.self, from: data!)
+        print(String(describing: store))
+    } catch {
+        fatalError()
+    }
 }
+task.resume()

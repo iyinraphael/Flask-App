@@ -34,7 +34,7 @@ class Item(Resource):
         except:
             return {"message": "An error occured inserting the item"}, 500 # Internal server error
 
-        return item, 201
+        return item.json(), 201
 
     def delete(self, name):
         connection = sqlite3.connect('data.db')

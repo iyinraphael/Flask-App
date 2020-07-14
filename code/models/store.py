@@ -1,24 +1,20 @@
 from db import db
 
-class ItemModel(db.Model):
+class StoreModel(db.Model):
     # Creates database name for SQLAlchemy
-    __tablename__ = 'items'
+    __tablename__ = 'stores'
 
     # Creates columns in the SQLAlchemy database
     id = db.Column(db.Integer, primary_key=True) # Unique ID:
     name = db.Column(db.String(80)) # creates name column and limits character to 80
-    price = db.Column(db.Float(precision=2)) # creates price column and limits character to 80
 
-    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
-    store = db.relationship('StoreModel')
+    items = db.relationship('ItemModel', lazy='dynamic')
 
-    def __init__(self, name, price, store_id):
+    def __init__(self, name, price):
         self.name = name
-        self.price = price
-        self.store_id = store_id
 
     def json(self):
-        return {'name': self.name, 'price': self.price}
+        return {'name': self.name, 'items': [item.json() for item in self.items.all()]}
 
     @classmethod
     def find_by_name(cls, name):

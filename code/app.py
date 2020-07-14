@@ -23,7 +23,7 @@ jwt = JWT(app, authenticate, identity) #/auth
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>') # http://127.0.0.1.5000/item/chair
 api.add_resource(ItemList, '/items')  # http://127.0.0.1.5000/items
-api.add_resource(StoreList, '/store')
+api.add_resource(StoreList, '/stores')
 api.add_resource(UserRegister, '/register')
 
 if __name__ == '__main__':

@@ -54,7 +54,7 @@ class Item(Resource):
 
         if item is None:
             item = ItemModel(name, data['price'], data['store_id'])
-
+            item.save_to_db()
         else:
             item.price = data['price']
             item.store_id = data['store_id']
